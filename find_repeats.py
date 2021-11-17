@@ -19,18 +19,15 @@ def get_repeats(instr: str, repeat_length: int = 6) -> dict:
     repeatDict = {}
     for i in range(len(lcparray)):
         match = instr[lcparray[i][0]:lcparray[i][0] + lcparray[i][1]]
-        try:
-            repeatDict[len(match)]
-        except KeyError:
+        if len(match) not in repeatDict.keys():
             repeatDict[len(match)] = {}
-        try:
+        if match in repeatDict[len(match)].keys():
             repeatDict[len(match)][match].append(lcparray[i][0])
             repeatDict[len(match)][match].append(lcparray[i][2])
-        except:  # @Todo: PEP8 naked excepts universally bad
+        else:
             repeatDict[len(match)][match] = [lcparray[i][0], lcparray[i][2]]
 
         repeatDict[len(match)][match] = list(set(repeatDict[len(match)][match]))
-
     return repeatDict
 
 
@@ -166,42 +163,42 @@ def get_direct_repeats(in_dict: dict) -> dict:
                                     #print("single","\t",repeatDict[seqLen][key][i],"\t",foundSeq)
                                     try:
                                         directrepeats[len(key)].append((in_dict[seqLen][key][i],
-                                                                           in_dict[seqLen][key][i]+(j+1)*len(key)))
+                                                                        in_dict[seqLen][key][i] + (j + 1) * len(key)))
                                     except KeyError:
-                                        directrepeats[len(key)]=[(in_dict[seqLen][key][i], 
-                                                                     in_dict[seqLen][key][i]+(j+1)*len(key))]
+                                        directrepeats[len(key)] = [(in_dict[seqLen][key][i],
+                                                                    in_dict[seqLen][key][i] + (j + 1) * len(key))]
                             elif len(key) == 2:
                                 if j+1 >= 4:
                                     #print("direp","\t",repeatDict[seqLen][key][i],"\t",foundSeq)
-                                    try:
-                                        directrepeats[len(key)].append((in_dict[seqLen][key][i], 
-                                                                           in_dict[seqLen][key][i]+(j+1)*len(key)))
-                                    except KeyError:
-                                        directrepeats[len(key)]=[(in_dict[seqLen][key][i], 
-                                                                     in_dict[seqLen][key][i]+(j+1)*len(key))]
+                                    if len(key) in directrepeats.keys():
+                                        directrepeats[len(key)].append((in_dict[seqLen][key][i],
+                                                                        in_dict[seqLen][key][i] + (j + 1) * len(key)))
+                                    else:
+                                        directrepeats[len(key)] = [(in_dict[seqLen][key][i],
+                                                                    in_dict[seqLen][key][i] + (j + 1) * len(key))]
                             elif len(key) < 15:
                                 if j+1 >= 3:
                                     #print(str(seqLen)+"mer","\t",repeatDict[seqLen][key][i],"\t",foundSeq)
-                                    try:
+                                    if len(key) in directrepeats.keys():
                                         directrepeats[len(key)].append((in_dict[seqLen][key][i],
-                                                                           in_dict[seqLen][key][i]+(j+1)*len(key)))
-                                    except KeyError:
-                                        directrepeats[len(key)]=[(in_dict[seqLen][key][i],
-                                                                     in_dict[seqLen][key][i]+(j+1)*len(key))]
+                                                                        in_dict[seqLen][key][i] + (j + 1) * len(key)))
+                                    else:
+                                        directrepeats[len(key)] = [(in_dict[seqLen][key][i],
+                                                                    in_dict[seqLen][key][i] + (j + 1) * len(key))]
                             elif len(key) >= 15:
                                 if j+1 >= 2:
                                     #print(str(seqLen)+"mer","\t",repeatDict[seqLen][key][i],"\t",foundSeq)
-                                    try:
+                                    if len(key) in directrepeats.keys():
                                         directrepeats[len(key)].append((in_dict[seqLen][key][i],
-                                                                           in_dict[seqLen][key][i]+(j+1)*len(key)))
-                                    except KeyError:
-                                        directrepeats[len(key)]=[(in_dict[seqLen][key][i],
-                                                                     in_dict[seqLen][key][i]+(j+1)*len(key))]
+                                                                        in_dict[seqLen][key][i] + (j + 1) * len(key)))
+                                    else:
+                                        directrepeats[len(key)] = [(in_dict[seqLen][key][i],
+                                                                    in_dict[seqLen][key][i] + (j + 1) * len(key))]
     filtereddirectrepeats={}
     #homopolyList=[]
     for key in directrepeats:
         if key == 1:  # already "actively filtered" above
-            filtereddirectrepeats[key]=directrepeats[1]
+            filtereddirectrepeats[key] = directrepeats[1]
             continue
         else:
             filtereddirectrepeats[key]=[]
