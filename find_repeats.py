@@ -37,7 +37,7 @@ def get_repeats(inStr, repeat_length = 6):
         try:
             repeatDict[len(match)][match].append(lcparray[i][0])
             repeatDict[len(match)][match].append(lcparray[i][2])
-        except:
+        except KeyError:
             repeatDict[len(match)][match] =[lcparray[i][0],lcparray[i][2]]
 
         repeatDict[len(match)][match] = list(set(repeatDict[len(match)][match]))
