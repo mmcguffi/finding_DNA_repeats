@@ -1,0 +1,5 @@
+.ipynb_checkpoints/
+Find Repeats Final.ipynb
+*.gb
+*.gbff
+*.DS_Store
