@@ -3,3 +3,4 @@ Find Repeats Final.ipynb
 *.gb
 *.gbff
 *.DS_Store
+__pycache__
